@@ -43,9 +43,4 @@ public class PlayerController : MonoBehaviour
     {
         LevelManager.instance.EnemyTouched();
     }
-
-    void DestroyItself()
-    {
-        Destroy(this);
-    }
 }

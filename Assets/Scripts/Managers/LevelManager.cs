@@ -48,12 +48,15 @@ public class LevelManager : MonoBehaviour
 
     void SpawnCrates()
     {
-        SpawnCrate();
+        SpawnCrate(new Vector3(3, 0.5f, 3));
+        SpawnCrate(new Vector3(3, 0.5f, -3));
+        SpawnCrate(new Vector3(-3, 0.5f, 3));
+        SpawnCrate(new Vector3(-3, 0.5f, -3));
     }
 
-    void SpawnCrate()
+    void SpawnCrate(Vector3 pos)
     {
-        Instantiate(cratePrefab);
+        Instantiate(cratePrefab, pos, Quaternion.identity);
     }
 
     public void EnemyTouched()
