@@ -19,6 +19,14 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == TagNames.Enemy)
+        {
+            EnemyTouched();
+        }
+    }
+
     void Move()
     {
         float moveX = MoveValue(GetAxisNames.Horizontal);
@@ -29,5 +37,10 @@ public class PlayerController : MonoBehaviour
     float MoveValue(string axisName)
     {
         return Input.GetAxis(axisName) * speed * Time.deltaTime;
+    }
+
+    void EnemyTouched()
+    {
+        Debug.Log("Dead");
     }
 }
