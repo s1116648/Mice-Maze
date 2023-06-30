@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     [SerializeField]
-    GameObject startScreen;
+    GameObject startScreen, gameOverScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +29,19 @@ public class UIManager : MonoBehaviour
         GameManager.instance.StartGame();
     }
 
-    public void startLevel()
+    public void MainMenuPressed()
+    {
+        GameManager.instance.MainMenu();
+    }
+
+    public void StartLevel()
     {
         startScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        gameOverScreen.SetActive(true);
     }
 }

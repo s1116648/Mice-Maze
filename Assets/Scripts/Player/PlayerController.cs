@@ -41,6 +41,6 @@ public class PlayerController : MonoBehaviour
 
     void EnemyTouched()
     {
-        Debug.Log("Dead");
+        GameManager.instance.GameOver();
     }
 }

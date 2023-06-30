@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,17 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        UIManager.instance.startLevel();
+        UIManager.instance.StartLevel();
+        LevelManager.instance.LoadLevel();
+    }
+
+    public void GameOver()
+    {
+        UIManager.instance.GameOver();
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
