@@ -7,7 +7,9 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
 
     [SerializeField]
-    GameObject player, enemy, crate;
+    GameObject playerPrefab, enemyPrefab, cratePrefab;
+
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,7 @@ public class LevelManager : MonoBehaviour
 
     void SpawnPlayer()
     {
-        Instantiate(player);
+        player = Instantiate(playerPrefab);
     }
 
     void SpawnEnemies() {
@@ -41,7 +43,7 @@ public class LevelManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Instantiate(enemy);
+        Instantiate(enemyPrefab);
     }
 
     void SpawnCrates()
@@ -51,6 +53,17 @@ public class LevelManager : MonoBehaviour
 
     void SpawnCrate()
     {
-        Instantiate(crate);
+        Instantiate(cratePrefab);
+    }
+
+    public void EnemyTouched()
+    {
+        KillPlayer();
+        GameManager.instance.GameOver();
+    }
+
+    void KillPlayer()
+    {
+        Destroy(player, 0.1f);
     }
 }

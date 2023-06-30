@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
 
     void EnemyTouched()
     {
-        GameManager.instance.GameOver();
+        LevelManager.instance.EnemyTouched();
+    }
+
+    void DestroyItself()
+    {
+        Destroy(this);
     }
 }
