@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
         {
             instance = this;
         }
+        CheckIfHighScoreExists();
     }
 
     // Update is called once per frame
@@ -25,21 +26,68 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    public void IncreaseScore(int value)
+    void CheckIfHighScoreExists()
     {
-        score += value;
-        UIManager.instance.UpdateScore(score);
+        if (!PlayerPrefs.HasKey(PlayerPrefsKeys.highScore))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.highScore, 0);
+        }
     }
 
-    public void IncreaseFoodScore()
+    void IncreaseScore(int value)
+    {
+        score += value;
+        SendScore();
+    }
+
+    void SendScore()
+    {
+        ScoreToPlayerPrefs();
+        UIManager.instance.UpdateScore();
+    }
+
+    void SendFoodScore()
+    {
+        FoodScoreToPlayerPrefs();
+        UIManager.instance.UpdateFoodScore();
+    }
+
+    void IncreaseFoodScore()
     {
         foodScore++;
-        UIManager.instance.UpdateFoodScore(foodScore);
+        SendFoodScore();
     }
 
     public void FoodEaten()
     {
         IncreaseFoodScore();
         IncreaseScore(foodPoints);
+    }
+
+    void FoodScoreToPlayerPrefs()
+    {
+        PlayerPrefs.SetInt(PlayerPrefsKeys.foodScore, foodScore);
+    }
+
+    void ScoreToPlayerPrefs()
+    {
+        PlayerPrefs.SetInt(PlayerPrefsKeys.score, score);
+        IfHighScoreUpdateIt();
+    }
+
+    void IfHighScoreUpdateIt()
+    {
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.highScore) < score)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.highScore, score);
+        }
+    }
+
+    public void ResetAllScores()
+    {
+        score = 0;
+        SendScore();
+        foodScore = 0;
+        SendFoodScore();
     }
 }

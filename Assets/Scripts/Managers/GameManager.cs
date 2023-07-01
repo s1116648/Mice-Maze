@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.instance.StartLevel();
         LevelManager.instance.LoadLevel();
+        ScoreManager.instance.ResetAllScores();
     }
 
     public void GameOver()
