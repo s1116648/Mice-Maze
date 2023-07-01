@@ -1,0 +1,11 @@
+#	f	c	#	c	p	#	c	#	c	#
+c	#	#	c	c	#	#	c	#	#	#
+c	#	#	#	#	c	c	#	#	#	c
+c	e	#	#	#	#	c	#	#	c	#
+#	c	#	c	c	#	#	#	c	c	#
+#	#	c	#	e	#	#	#	c	f	#
+c	#	#	#	#	#	#	#	#	#	#
+#	f	#	c	#	#	c	#	c	c	#
+#	c	#	c	c	c	#	#	c	#	#
+#	c	#	c	#	c	e	c	c	c	#
+#	#	c	c	#	#	c	#	c	#	#

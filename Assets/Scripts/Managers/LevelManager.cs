@@ -27,10 +27,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        SpawnPlayer();
-        SpawnEnemies();
-        SpawnCrates();
-        SpawnFoods();
+        LevelBuilder.instance.BuildLevel();
     }
 
     void SpawnPlayer()
