@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out RaycastHit hit, 0.75f))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(direction) * hit.distance, Color.yellow);
-            return IsNotPlayer(hit.transform.gameObject);
+            return !IsPlayer(hit.transform.gameObject);
         }
         else
         {
@@ -54,12 +54,39 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    bool IsNotPlayer(GameObject obj)
+    bool IsPlayer(GameObject obj)
     {
-        if (obj.tag == TagNames.Player)
+        return (obj.tag == TagNames.Player);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == TagNames.Player)
         {
-            return false;
+            TryFollowPlayer(other.gameObject);
         }
-        return true;
+    }
+
+    void TryFollowPlayer(GameObject player)
+    {
+        if (SeesPlayer(player))
+        {
+            Debug.Log("Try to move to player");
+        }
+    }
+
+    bool SeesPlayer(GameObject player)
+    {
+        Vector3 direction = FindDirection(player.transform.position);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out RaycastHit hit, 5f))
+        {
+            return IsPlayer(hit.transform.gameObject);
+        }
+        return false;
+    }
+
+    Vector3 FindDirection(Vector3 destination)
+    {
+        return destination - transform.position;
     }
 }
