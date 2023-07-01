@@ -21,7 +21,12 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void StartGame()
+    {
+        startScreen.SetActive(true);
     }
 
     public void StartGamePressed()
@@ -44,4 +49,5 @@ public class UIManager : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
     }
+
 }

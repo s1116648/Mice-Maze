@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    bool gameLoaded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -14,12 +15,22 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!gameLoaded)
+        {
+            LoadGame();
+            gameLoaded = true;
+        }
+    }
+
+    void LoadGame()
+    {
+        UIManager.instance.StartGame();
     }
 
     public void StartGamePressed()
