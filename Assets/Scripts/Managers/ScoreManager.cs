@@ -6,7 +6,9 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
 
-    readonly int foodPoints = 10;
+    readonly int 
+        foodPoints = 10,
+        enemyKillPoints = 100;
 
     int score, foodScore;
 
@@ -56,6 +58,11 @@ public class ScoreManager : MonoBehaviour
     {
         foodScore++;
         SendFoodScore();
+    }
+
+    public void EnemyKilled()
+    {
+        IncreaseScore(enemyKillPoints);
     }
 
     public void FoodEaten()

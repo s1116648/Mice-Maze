@@ -36,7 +36,7 @@ public class EnemyController : MonoBehaviour
         }
         if (surrounded)
         {
-            Destroy(transform.gameObject);
+            LevelManager.instance.EnemySurrounded(transform.gameObject);
         }
     }
 

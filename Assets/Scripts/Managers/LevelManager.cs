@@ -86,4 +86,10 @@ public class LevelManager : MonoBehaviour
     {
         Destroy(player, 0.1f);
     }
+
+    public void EnemySurrounded(GameObject enemy)
+    {
+        Destroy(enemy);
+        ScoreManager.instance.EnemyKilled();
+    }
 }
