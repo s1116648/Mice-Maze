@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     void LoadGame()
     {
-        UIManager.instance.StartGame();
+        UIManager.instance.LoadGame();
     }
 
     public void StartGamePressed()

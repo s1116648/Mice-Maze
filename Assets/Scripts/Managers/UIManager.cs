@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
     [SerializeField]
-    GameObject startScreen, gameOverScreen;
+    GameObject startScreen, gameOverScreen, gameStats;
+    [SerializeField]
+    TextMeshProUGUI scoreField, foodScoreField;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void StartGame()
+    public void LoadGame()
     {
         startScreen.SetActive(true);
     }
@@ -43,6 +46,7 @@ public class UIManager : MonoBehaviour
     {
         startScreen.SetActive(false);
         gameOverScreen.SetActive(false);
+        gameStats.SetActive(true);
     }
 
     public void GameOver()
@@ -50,4 +54,14 @@ public class UIManager : MonoBehaviour
         gameOverScreen.SetActive(true);
     }
 
+
+    public void UpdateScore(int score)
+    {
+        scoreField.text = score.ToString();
+    }
+
+    public void UpdateFoodScore(int score)
+    {
+        foodScoreField.text = score.ToString();
+    }
 }
