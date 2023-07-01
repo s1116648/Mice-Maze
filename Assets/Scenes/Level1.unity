@@ -360,6 +360,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 3009174652900836677, guid: 20e7a9549f429f84b9eacb496490e7f0, type: 3}
   enemyPrefab: {fileID: 4361518938884600755, guid: b575b51f6f4c13f49ab07715b3061421, type: 3}
   cratePrefab: {fileID: 3042774645347042646, guid: a538410503ca28642a1a308508206d39, type: 3}
+  foodPrefab: {fileID: 696461124539896177, guid: bb1b64f530b884b48b7a126f3eb9ff57, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

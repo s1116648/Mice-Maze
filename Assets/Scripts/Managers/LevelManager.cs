@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
 
     [SerializeField]
-    GameObject playerPrefab, enemyPrefab, cratePrefab;
+    GameObject playerPrefab, enemyPrefab, cratePrefab, foodPrefab;
 
     GameObject player;
 
@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
         SpawnPlayer();
         SpawnEnemies();
         SpawnCrates();
+        SpawnFoods();
     }
 
     void SpawnPlayer()
@@ -57,6 +58,16 @@ public class LevelManager : MonoBehaviour
     void SpawnCrate(Vector3 pos)
     {
         Instantiate(cratePrefab, pos, Quaternion.identity);
+    }
+
+    void SpawnFoods()
+    {
+        SpawnFood(new Vector3(1, 0.5f, 3));
+    }
+
+    void SpawnFood(Vector3 pos)
+    {
+        Instantiate(foodPrefab, pos, Quaternion.identity);
     }
 
     public void EnemyTouched()
