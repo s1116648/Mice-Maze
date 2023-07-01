@@ -607,6 +607,8 @@ MonoBehaviour:
   gameStats: {fileID: 1263787387}
   scoreField: {fileID: 1712714880}
   foodScoreField: {fileID: 1735871365}
+  gameOverScoreField: {fileID: 1069474454}
+  gameOverHighScoreField: {fileID: 2043170382}
 --- !u!114 &891898628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,10 +633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4243508ee219e2349b2110e505ff2305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3009174652900836677, guid: 20e7a9549f429f84b9eacb496490e7f0, type: 3}
-  enemyPrefab: {fileID: 4361518938884600755, guid: b575b51f6f4c13f49ab07715b3061421, type: 3}
-  cratePrefab: {fileID: 3042774645347042646, guid: a538410503ca28642a1a308508206d39, type: 3}
-  foodPrefab: {fileID: 696461124539896177, guid: bb1b64f530b884b48b7a126f3eb9ff57, type: 3}
 --- !u!114 &891898630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +741,7 @@ GameObject:
   - component: {fileID: 1069474455}
   - component: {fileID: 1069474454}
   m_Layer: 5
-  m_Name: Score
+  m_Name: GameOverScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,7 +1276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1568909761
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2015,6 +2013,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781176364}
   m_CullTransparentMesh: 1
+--- !u!1 &1935121369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935121371}
+  - component: {fileID: 1935121370}
+  m_Layer: 0
+  m_Name: LevelBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1935121370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935121369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6918b889e2dab4f92ae869cfa9d75e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 3009174652900836677, guid: 20e7a9549f429f84b9eacb496490e7f0, type: 3}
+  enemyPrefab: {fileID: 4361518938884600755, guid: b575b51f6f4c13f49ab07715b3061421, type: 3}
+  cratePrefab: {fileID: 3042774645347042646, guid: a538410503ca28642a1a308508206d39, type: 3}
+  foodPrefab: {fileID: 696461124539896177, guid: bb1b64f530b884b48b7a126f3eb9ff57, type: 3}
+--- !u!4 &1935121371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935121369}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5349605, y: 1.4143876, z: 0.04053278}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2039318558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,7 +2073,7 @@ GameObject:
   - component: {fileID: 2039318561}
   - component: {fileID: 2039318560}
   m_Layer: 5
-  m_Name: GameOver
+  m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,7 +2208,7 @@ GameObject:
   - component: {fileID: 2043170383}
   - component: {fileID: 2043170382}
   m_Layer: 5
-  m_Name: HighScore
+  m_Name: GameOverHighScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

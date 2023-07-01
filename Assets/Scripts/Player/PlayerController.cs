@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     void EnemyTouched()
     {
-        LevelManager.instance.EnemyTouched();
+        LevelManager.instance.EnemyTouched(transform.gameObject);
     }
 
     void FoodTouched(GameObject food)
