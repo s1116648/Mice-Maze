@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour
 
     GameObject player;
 
+    int score = 0, foodScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,12 @@ public class LevelManager : MonoBehaviour
     {
         KillPlayer();
         GameManager.instance.GameOver();
+    }
+
+    public void FoodTouched(GameObject food)
+    {
+        Destroy(food);
+        foodScore++;
     }
 
     void KillPlayer()

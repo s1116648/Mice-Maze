@@ -19,6 +19,14 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == TagNames.Food)
+        {
+            FoodTouched(other.gameObject);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == TagNames.Enemy)
@@ -42,5 +50,10 @@ public class PlayerController : MonoBehaviour
     void EnemyTouched()
     {
         LevelManager.instance.EnemyTouched();
+    }
+
+    void FoodTouched(GameObject food)
+    {
+        LevelManager.instance.FoodTouched(food);
     }
 }
