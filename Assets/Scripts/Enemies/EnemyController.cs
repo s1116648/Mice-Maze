@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    bool pauzed = false;
+
     // NavMesh
     NavMeshAgent agent;
     enum MoveState { Chasing, Patrolling }
@@ -33,8 +35,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Surrounded();
-        Move();
+        if (!pauzed)
+        {
+            Surrounded();
+            Move();
+        }
     }
 
     void Move()
@@ -170,5 +175,10 @@ public class EnemyController : MonoBehaviour
         float distance = heading.magnitude;
         Vector3 direction = heading / distance; // so that the vector has length 1
         return Quaternion.Euler(0, -transform.eulerAngles.y, 0) * direction;
+    }
+
+    public void PauzeUpdates()
+    {
+        pauzed = true;
     }
 }

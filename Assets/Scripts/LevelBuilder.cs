@@ -150,4 +150,17 @@ public class LevelBuilder : MonoBehaviour
     {
         enemy.GetComponent<EnemyController>().target = player;
     }
+
+    public void PauzeAllEnemiesUpdates()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            PauzeEnemyEnemiesUpdate(enemy);
+        }
+    }
+
+    void PauzeEnemyEnemiesUpdate(GameObject enemy)
+    {
+        enemy.GetComponent<EnemyController>().PauzeUpdates();
+    }
 }

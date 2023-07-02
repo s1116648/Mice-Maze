@@ -27,11 +27,11 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel()
     {
         LevelBuilder.instance.BuildLevel();
-        
     }
 
     public void EnemyTouched(GameObject player)
     {
+        LevelBuilder.instance.PauzeAllEnemiesUpdates();
         KillPlayer(player);
         GameManager.instance.GameOver();
     }
