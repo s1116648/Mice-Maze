@@ -129,6 +129,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             CancelInvoke("SendBeingSurrounded");
+            surroundedInvokeCalled = false;
         }
     }
 
