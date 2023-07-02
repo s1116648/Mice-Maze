@@ -100,9 +100,10 @@ public class EnemyController : MonoBehaviour
     {
         if (CheckIfSurrounded())
         {
-            if (!surroundedInvokeCalled)
+            if (!surroundedInvokeCalled) // Kills it in 1 sec unless it isn't surrounded anymore
             {
                 Invoke("SendBeingSurrounded", 1f);
+                surroundedInvokeCalled = true;
             }
         }
         else
@@ -169,7 +170,7 @@ public class EnemyController : MonoBehaviour
     {
         Vector3 heading = destination - transform.position;
         float distance = heading.magnitude;
-        Vector3 direction = heading / distance;
+        Vector3 direction = heading / distance; // so that the vector has length 1
         return Quaternion.Euler(0, -transform.eulerAngles.y, 0) * direction;
     }
 }
