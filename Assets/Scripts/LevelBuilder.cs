@@ -77,7 +77,7 @@ public class LevelBuilder : MonoBehaviour
         
     }
 
-    public void BuildLevel()
+    public GameObject BuildLevel()
     {
         pointer = new Pointer(0, 0); // Later middle of the level.
         string levelData = GetLevelData(level1);
@@ -86,6 +86,7 @@ public class LevelBuilder : MonoBehaviour
             levelData = SpawnNextThing(levelData);
         }
         EnemiesTargetPlayer();
+        return player;
     }
 
     string SpawnNextThing(string levelData)

@@ -47,9 +47,9 @@ public class PlayerController : MonoBehaviour
         return Input.GetAxis(axisName) * speed * Time.deltaTime;
     }
 
-    public void EnemyTouched() // Enemy can call this aswell
+    public void EnemyTouched() // EnemyController calls this aswell
     {
-        LevelManager.instance.EnemyTouched(transform.gameObject);
+        LevelManager.instance.EnemyTouched();
     }
 
     void FoodTouched(GameObject food)

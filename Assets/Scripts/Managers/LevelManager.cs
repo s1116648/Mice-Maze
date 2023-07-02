@@ -7,8 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    //[SerializeField]
-    
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +25,18 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        LevelBuilder.instance.BuildLevel();
+        player = LevelBuilder.instance.BuildLevel();
     }
 
-    public void EnemyTouched(GameObject player)
+    public void EnemyTouched()
+    {
+        Dead();
+    }
+
+    void Dead()
     {
         LevelBuilder.instance.PauzeAllEnemiesUpdates();
-        KillPlayer(player);
+        KillPlayer();
         GameManager.instance.GameOver();
     }
 
@@ -42,7 +46,7 @@ public class LevelManager : MonoBehaviour
         ScoreManager.instance.FoodEaten();
     }
 
-    void KillPlayer(GameObject player)
+    void KillPlayer()
     {
         Destroy(player, 0.1f);
     }
@@ -51,5 +55,10 @@ public class LevelManager : MonoBehaviour
     {
         Destroy(enemy);
         ScoreManager.instance.EnemyKilled();
+    }
+
+    public void NoEnergy()
+    {
+        Dead();
     }
 }

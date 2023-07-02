@@ -43,10 +43,12 @@ public class GameManager : MonoBehaviour
         UIManager.instance.StartLevel();
         LevelManager.instance.LoadLevel();
         ScoreManager.instance.ResetAllScores();
+        ScoreManager.instance.StartDecreasingEnergy();
     }
 
     public void GameOver()
     {
+        ScoreManager.instance.StopDecreasingEnergy();
         UIManager.instance.GameOver();
     }
 

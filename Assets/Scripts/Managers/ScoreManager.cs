@@ -6,11 +6,16 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
 
-    readonly int 
+    readonly int
         foodPoints = 10,
-        enemyKillPoints = 100;
+        enemyKillPoints = 100,
+        foodEnergy = 30;
+
+    readonly float consumeEnergyInterval = 1f;
 
     int score, foodScore;
+
+    bool isDecreasingEnergy = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +61,7 @@ public class ScoreManager : MonoBehaviour
 
     void IncreaseFoodScore()
     {
-        foodScore++;
+        foodScore += foodEnergy;
         SendFoodScore();
     }
 
@@ -94,7 +99,32 @@ public class ScoreManager : MonoBehaviour
     {
         score = 0;
         SendScore();
-        foodScore = 0;
+        foodScore = 50;
         SendFoodScore();
+    }
+
+    public void StartDecreasingEnergy()
+    {
+        if (!isDecreasingEnergy)
+        {
+            InvokeRepeating("DecreaseEnergy", consumeEnergyInterval, consumeEnergyInterval);
+            isDecreasingEnergy = true;
+        }
+    }
+
+    public void StopDecreasingEnergy()
+    {
+        CancelInvoke("DecreaseEnergy");
+        isDecreasingEnergy = false;
+    }
+
+    void DecreaseEnergy()
+    {
+        foodScore--;
+        SendFoodScore();
+        if (foodPoints <= 0)
+        {
+            LevelManager.instance.NoEnergy();
+        }
     }
 }

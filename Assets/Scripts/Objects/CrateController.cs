@@ -26,9 +26,9 @@ public class CrateController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.gameObject.tag == TagNames.Player)
+        if (collision.gameObject.tag == TagNames.Player)
         {
             Freeze(true);
         }
