@@ -155,7 +155,8 @@ public class LevelBuilder : MonoBehaviour
     {
         foreach (GameObject enemy in enemies)
         {
-            PauzeEnemyEnemiesUpdate(enemy);
+            if (enemy != null)
+                PauzeEnemyEnemiesUpdate(enemy);
         }
     }
 

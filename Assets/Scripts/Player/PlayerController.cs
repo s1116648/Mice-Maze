@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == TagNames.Enemy)
+        if (collision.gameObject.tag == TagNames.Enemy)
         {
             EnemyTouched();
         }
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         return Input.GetAxis(axisName) * speed * Time.deltaTime;
     }
 
-    void EnemyTouched()
+    public void EnemyTouched() // Enemy can call this aswell
     {
         LevelManager.instance.EnemyTouched(transform.gameObject);
     }

@@ -13,7 +13,9 @@ public class EnemyController : MonoBehaviour
     MoveState moveState = MoveState.Patrolling;
 
     // Chasing
-    readonly float sightDistance = 3f;
+    readonly float 
+        sightDistance = 3f,
+        targetRadius = 0.35f;
     public GameObject target; // The player is the target for now
 
     // Patrol
@@ -23,7 +25,7 @@ public class EnemyController : MonoBehaviour
     
     // surrounded checks
     bool surroundedInvokeCalled = false;
-    readonly float raySurroundedLenght = 0.5f;
+    readonly float raySurroundedLenght = 0.6f;
 
 
     // Start is called before the first frame update
@@ -39,7 +41,22 @@ public class EnemyController : MonoBehaviour
         {
             Surrounded();
             Move();
+            TryKill();
         }
+    }
+
+    void TryKill()
+    {
+        if (NextOrInTarget())
+        {
+            target.GetComponent<PlayerController>().EnemyTouched();
+        }
+    }
+
+    bool NextOrInTarget()
+    {
+        Vector3 distance = target.transform.position - transform.position;
+        return (distance.magnitude <= targetRadius);
     }
 
     void Move()
