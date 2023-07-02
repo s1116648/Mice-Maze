@@ -122,7 +122,7 @@ public class ScoreManager : MonoBehaviour
     {
         foodScore--;
         SendFoodScore();
-        if (foodPoints <= 0)
+        if (foodScore <= 0)
         {
             LevelManager.instance.NoEnergy();
         }
