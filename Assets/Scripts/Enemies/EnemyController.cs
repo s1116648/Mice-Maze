@@ -18,19 +18,24 @@ public class EnemyController : MonoBehaviour
     public GameObject target;
 
     bool hasPatrolDestination;
+    Vector3 patrolDestination;
+    readonly float maxPatrolRange = 3f;
 
+    bool surroundedInvokeCalled;
+    
     // Start is called before the first frame update
     void Start()
     {
         moveState = MoveState.Patrolling;
         agent = transform.GetComponent<NavMeshAgent>();
         hasPatrolDestination = false;
+        surroundedInvokeCalled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckIfSurrounded();
+        Surrounded();
         Move();
     }
 
@@ -67,25 +72,61 @@ public class EnemyController : MonoBehaviour
         {
             GeneratePatrolDestination();
         }
-        Debug.Log("Patrolling");
+        agent.SetDestination(patrolDestination);
+        Vector3 distanceToDestination = transform.position - patrolDestination;
+        if (distanceToDestination.magnitude < 0.5f)
+        {
+            hasPatrolDestination = false;
+            CancelInvoke("CancelPatrolMovement");
+        }
     }
 
     void GeneratePatrolDestination()
     {
-        
+        float randX = Random.Range(-maxPatrolRange, maxPatrolRange);
+        float randZ = Random.Range(-maxPatrolRange, maxPatrolRange);
+        Vector3 randomPoint = transform.position + new Vector3(randX, 0, randZ);
+        patrolDestination = randomPoint;
+        hasPatrolDestination = true;
+        Invoke("CancelPatrolMovement", 2f);
     }
 
-    void CheckIfSurrounded()
+    void CancelPatrolMovement()
+    {
+        hasPatrolDestination = false;
+    }
+
+    void Surrounded()
+    {
+        if (CheckIfSurrounded())
+        {
+            if (!surroundedInvokeCalled)
+            {
+                Invoke("SendBeingSurrounded", 1f);
+            }
+        }
+        else
+        {
+            CancelInvoke("SendBeingSurrounded");
+        }
+    }
+
+    void SendBeingSurrounded()
+    {
+        LevelManager.instance.EnemySurrounded(transform.gameObject);
+    }
+
+    bool CheckIfSurrounded()
     {
         Vector3 left = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.left;
-        if (!DirectionBlocked(left)) return;
+        if (!DirectionBlocked(left)) return false;
         Vector3 right = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.right;
-        if (!DirectionBlocked(right)) return;
+        if (!DirectionBlocked(right)) return false;
         Vector3 forward = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.forward;
-        if (!DirectionBlocked(forward)) return;
+        if (!DirectionBlocked(forward)) return false;
         Vector3 back = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.back;
-        if (!DirectionBlocked(back)) return;
-        LevelManager.instance.EnemySurrounded(transform.gameObject);
+        if (!DirectionBlocked(back)) return false;
+        return true;
     }
 
     bool DirectionBlocked(Vector3 direction)
