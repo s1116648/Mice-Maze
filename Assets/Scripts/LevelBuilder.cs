@@ -17,6 +17,9 @@ public class LevelBuilder : MonoBehaviour
 
     Pointer pointer;
 
+    GameObject player;
+    List<GameObject> enemies;
+
     class Pointer
     {
         readonly float
@@ -65,6 +68,7 @@ public class LevelBuilder : MonoBehaviour
         {
             instance = this;
         }
+        enemies = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -81,6 +85,7 @@ public class LevelBuilder : MonoBehaviour
         {
             levelData = SpawnNextThing(levelData);
         }
+        EnemiesTargetPlayer();
     }
 
     string SpawnNextThing(string levelData)
@@ -116,12 +121,12 @@ public class LevelBuilder : MonoBehaviour
 
     void SpawnPlayer(Vector3 position)
     {
-        Instantiate(playerPrefab, position, Quaternion.identity, playersParent.transform);
+        player = Instantiate(playerPrefab, position, Quaternion.identity, playersParent.transform);
     }
 
     void SpawnEnemy(Vector3 position)
     {
-        Instantiate(enemyPrefab, position, Quaternion.identity, enemiesParent.transform);
+        enemies.Add(Instantiate(enemyPrefab, position, Quaternion.identity, enemiesParent.transform));
     }
 
     void SpawnCrate(Vector3 position)
@@ -132,5 +137,17 @@ public class LevelBuilder : MonoBehaviour
     void SpawnFood(Vector3 position)
     {
         Instantiate(foodPrefab, position, Quaternion.identity, foodsParent.transform);
+    }
+
+    void EnemiesTargetPlayer()
+    {
+        foreach (GameObject enemy in enemies) {
+            EnemyTargetPlayer(enemy);
+        }
+    }
+
+    void EnemyTargetPlayer(GameObject enemy)
+    {
+        enemy.GetComponent<EnemyController>().target = player;
     }
 }

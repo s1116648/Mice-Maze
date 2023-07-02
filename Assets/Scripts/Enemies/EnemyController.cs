@@ -1,23 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField]
-    GameObject 
-        frontSide,
-        leftSide,
-        rightSide;
+    readonly float 
+        raySurroundedLenght = 0.5f,
+        moveCheckerLength = 0.45f,
+        sightDistance = 3f;
 
-    float speed = 3.5f;
+    enum MoveState { Chasing, Patrolling }
+    MoveState moveState;
 
-    readonly float rayLenght = 0.5f;
+    NavMeshAgent agent;
+
+    public GameObject target;
+
+    bool hasPatrolDestination;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        moveState = MoveState.Patrolling;
+        agent = transform.GetComponent<NavMeshAgent>();
+        hasPatrolDestination = false;
     }
 
     // Update is called once per frame
@@ -25,6 +32,38 @@ public class EnemyController : MonoBehaviour
     {
         CheckIfSurrounded();
         Move();
+    }
+
+    void Move()
+    {
+        UpdateMoveState();
+        switch (moveState)
+        {
+            case MoveState.Chasing:
+                ChasePlayer();
+                break;
+            case MoveState.Patrolling:
+                Patrolling();
+                break;
+        }
+    }
+
+    void UpdateMoveState()
+    {
+        if (SeesPlayer())
+            moveState = MoveState.Chasing;
+        else
+            moveState = MoveState.Patrolling;
+    }
+
+    void ChasePlayer()
+    {
+        agent.SetDestination(target.transform.position);
+    }
+
+    void Patrolling()
+    {
+        Debug.Log("Patrolling");
     }
 
     void CheckIfSurrounded()
@@ -38,10 +77,10 @@ public class EnemyController : MonoBehaviour
 
     bool DirectionBlocked(Vector3 direction)
     {
-        return DirectionBlocked(transform.position, direction);
+        return DirectionBlocked(transform.position, direction, raySurroundedLenght);
     }
-
-    bool DirectionBlocked(Vector3 position, Vector3 direction)
+    
+    bool DirectionBlocked(Vector3 position, Vector3 direction, float rayLenght)
     {
         if (Physics.Raycast(position, transform.TransformDirection(direction), out RaycastHit hit, rayLenght))
         {
@@ -60,74 +99,23 @@ public class EnemyController : MonoBehaviour
         return (obj.tag == TagNames.Player);
     }
 
-    void OnTriggerEnter(Collider other)
+    bool SeesPlayer()
     {
-        if (other.gameObject.tag == TagNames.Player)
-            TryFollowPlayer(other.gameObject);
-    }
-
-    void TryFollowPlayer(GameObject player)
-    {
-        if (SeesPlayer(player))
-            Debug.Log("Try to move to player");
-    }
-
-    bool SeesPlayer(GameObject player)
-    {
-        Vector3 direction = FindDirection(player.transform.position);
-        if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out RaycastHit hit, 5f))
+        Vector3 direction = FindDirection(target.transform.position);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out RaycastHit hit, sightDistance))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(direction) * hit.distance, Color.yellow);
             return IsPlayer(hit.transform.gameObject);
+        }
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction) * hit.distance, Color.red);
         return false;
     }
 
     Vector3 FindDirection(Vector3 destination)
     {
-        return destination - transform.position;
-    }
-
-    void Move()
-    {
-        Vector3 forwardDirection = transform.rotation * transform.forward;
-        if (CanMoveForward(forwardDirection))
-        {
-            MoveForward(forwardDirection);
-        }
-    }
-
-    void MoveForward(Vector3 forwardDirection)
-    {
-        float
-            moveX = forwardDirection.x * speed * Time.deltaTime,
-            moveZ = forwardDirection.z * speed * Time.deltaTime;
-        transform.Translate(moveX, 0, moveZ);
-    }
-
-    bool CanMoveForward(Vector3 direction)
-    {
-        if (MiddleForwardBlocked(direction))
-            return false;
-        if (LeftForwardBlocked(direction))
-            return false;
-        if (RightForwardBlocked(direction))
-            return false;
-        return true;
-    }
-
-    bool MiddleForwardBlocked(Vector3 direction)
-    {
-        Vector3 position = frontSide.gameObject.transform.position;
-        return DirectionBlocked(position, direction);
-    }
-
-    bool LeftForwardBlocked(Vector3 direction)
-    {
-        Vector3 position = leftSide.gameObject.transform.position;
-        return DirectionBlocked(position, direction);
-    }
-
-    bool RightForwardBlocked(Vector3 direction)
-    {
-        Vector3 position = rightSide.gameObject.transform.position;
-        return DirectionBlocked(position, direction);
+        Vector3 heading = destination - transform.position;
+        float distance = heading.magnitude;
+        Vector3 direction = heading / distance;
+        return Quaternion.Euler(0, -transform.eulerAngles.y, 0) * direction;
     }
 }

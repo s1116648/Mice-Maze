@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+
+    //[SerializeField]
+    
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,7 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel()
     {
         LevelBuilder.instance.BuildLevel();
+        
     }
 
     public void EnemyTouched(GameObject player)
