@@ -5,31 +5,29 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    readonly float 
-        raySurroundedLenght = 0.5f,
-        moveCheckerLength = 0.45f,
-        sightDistance = 3f;
-
-    enum MoveState { Chasing, Patrolling }
-    MoveState moveState;
-
+    // NavMesh
     NavMeshAgent agent;
+    enum MoveState { Chasing, Patrolling }
+    MoveState moveState = MoveState.Patrolling;
 
-    public GameObject target;
+    // Chasing
+    readonly float sightDistance = 3f;
+    public GameObject target; // The player is the target for now
 
-    bool hasPatrolDestination;
+    // Patrol
+    bool hasPatrolDestination = false;
     Vector3 patrolDestination;
     readonly float maxPatrolRange = 3f;
-
-    bool surroundedInvokeCalled;
     
+    // surrounded checks
+    bool surroundedInvokeCalled = false;
+    readonly float raySurroundedLenght = 0.5f;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        moveState = MoveState.Patrolling;
         agent = transform.GetComponent<NavMeshAgent>();
-        hasPatrolDestination = false;
-        surroundedInvokeCalled = false;
     }
 
     // Update is called once per frame
