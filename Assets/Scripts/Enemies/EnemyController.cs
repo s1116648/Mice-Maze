@@ -63,15 +63,28 @@ public class EnemyController : MonoBehaviour
 
     void Patrolling()
     {
+        if(!hasPatrolDestination)
+        {
+            GeneratePatrolDestination();
+        }
         Debug.Log("Patrolling");
+    }
+
+    void GeneratePatrolDestination()
+    {
+        
     }
 
     void CheckIfSurrounded()
     {
-        if (!DirectionBlocked(Vector3.left)) return;
-        if (!DirectionBlocked(Vector3.right)) return;
-        if (!DirectionBlocked(Vector3.forward)) return;
-        if (!DirectionBlocked(Vector3.back)) return;
+        Vector3 left = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.left;
+        if (!DirectionBlocked(left)) return;
+        Vector3 right = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.right;
+        if (!DirectionBlocked(right)) return;
+        Vector3 forward = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.forward;
+        if (!DirectionBlocked(forward)) return;
+        Vector3 back = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.back;
+        if (!DirectionBlocked(back)) return;
         LevelManager.instance.EnemySurrounded(transform.gameObject);
     }
 
