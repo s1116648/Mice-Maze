@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
         {
             BottomPassage();
         }
+        else if (other.gameObject.tag == TagNames.Key)
+        {
+            FoundKey(other.gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -39,7 +43,20 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == TagNames.Enemy)
         {
             EnemyTouched();
+        } else if (collision.gameObject.tag == TagNames.Door)
+        {
+            DoorTouched();
         }
+    }
+
+    void DoorTouched()
+    {
+        LevelManager.instance.DoorTouched();
+    }
+
+    void FoundKey(GameObject key)
+    {
+        LevelManager.instance.FoundKey(key);
     }
 
     void BottomPassage()

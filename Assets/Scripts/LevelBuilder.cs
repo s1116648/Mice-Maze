@@ -87,7 +87,6 @@ public class LevelBuilder : MonoBehaviour
     public GameObject BuildLevel(float centerX, float centerZ)
     {
         pointer = new Pointer(centerX, centerZ);
-        Debug.Log("centerX: " + centerX + "\ncenterZ: " + centerZ);
         string levelData = GetLevelData(levelPath);
         while (levelData.Length > 0)
         {

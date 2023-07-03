@@ -9,11 +9,14 @@ public class ScoreManager : MonoBehaviour
     readonly int
         foodPoints = 10,
         enemyKillPoints = 100,
-        foodEnergy = 30;
+        keyPoints = 25,
+        foodEnergy = 30,
+        winBonus = 500;
 
     readonly float consumeEnergyInterval = 1f;
 
     int score, foodScore;
+    bool hasKey = false;
 
     bool isDecreasingEnergy = false;
 
@@ -126,5 +129,24 @@ public class ScoreManager : MonoBehaviour
         {
             LevelManager.instance.NoEnergy();
         }
+    }
+
+    public void AddKey()
+    {
+        if(!hasKey)
+        {
+            IncreaseScore(keyPoints);
+        }
+        hasKey = true;
+    }
+
+    public bool HasKey()
+    {
+        return hasKey;
+    }
+
+    public void CalculateWinScore()
+    {
+        IncreaseScore(foodEnergy + winBonus);
     }
 }

@@ -8,5 +8,7 @@ public static class TagNames
         Player = "Player",
         Enemy = "Enemy",
         Food = "Food",
-        PassageBottom = "PassageBottom";
+        PassageBottom = "PassageBottom",
+        Key = "Key",
+        Door = "Door";
 }

@@ -25,8 +25,6 @@ public class LevelManager : MonoBehaviour
     enum Level { level1, level2 }
     Level level = Level.level1;
 
-    bool level2IsBuild = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -51,13 +49,26 @@ public class LevelManager : MonoBehaviour
     public void EnemyTouched()
     {
         Dead();
+        GameManager.instance.GotEaten();
     }
 
     void Dead()
     {
-        level1Builder.GetComponent<LevelBuilder>().PauzeAllEnemiesUpdates();
+        PauzeEnemyUpdates();
         KillPlayer();
-        GameManager.instance.GameOver();
+    }
+
+    void PauzeEnemyUpdates()
+    {
+        switch (level)
+        {
+            case Level.level1:
+                level1Builder.GetComponent<LevelBuilder>().PauzeAllEnemiesUpdates();
+                break;
+            case Level.level2:
+                level2Builder.GetComponent<LevelBuilder>().PauzeAllEnemiesUpdates();
+                break;
+        }
     }
 
     public void FoodTouched(GameObject food)
@@ -80,11 +91,11 @@ public class LevelManager : MonoBehaviour
     public void NoEnergy()
     {
         Dead();
+        GameManager.instance.Starved();
     }
 
     public void BottomPassage()
     {
-        Debug.Log("Hey");
         switch(level) // Later better logic, now kind of hardcoded
         {
             case Level.level1:
@@ -132,5 +143,25 @@ public class LevelManager : MonoBehaviour
     void DeactivateLevel2()
     {
         level2.SetActive(false);
+    }
+
+    public void FoundKey(GameObject key)
+    {
+        ScoreManager.instance.AddKey();
+        Destroy(key);
+    }
+
+    public void DoorTouched()
+    {
+        if (ScoreManager.instance.HasKey())
+        {
+            Win();
+        }
+    }
+
+    void Win()
+    {
+        PauzeEnemyUpdates();
+        GameManager.instance.Win();
     }
 }

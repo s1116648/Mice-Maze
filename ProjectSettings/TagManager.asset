@@ -8,6 +8,8 @@ TagManager:
   - Food
   - Crate
   - PassageBottom
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX

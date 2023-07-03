@@ -46,7 +46,19 @@ public class GameManager : MonoBehaviour
         ScoreManager.instance.StartDecreasingEnergy();
     }
 
-    public void GameOver()
+    public void GotEaten()
+    {
+        GameOver();
+        UIManager.instance.DisplayGotEaten();
+    }
+
+    public void Starved()
+    {
+        GameOver();
+        UIManager.instance.DisplayStarved();
+    }
+
+    void GameOver()
     {
         ScoreManager.instance.StopDecreasingEnergy();
         UIManager.instance.GameOver();
@@ -55,5 +67,12 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Win()
+    {
+        ScoreManager.instance.CalculateWinScore();
+        GameOver();
+        UIManager.instance.DisplayWon();
     }
 }

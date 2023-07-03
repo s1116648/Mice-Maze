@@ -15,11 +15,21 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI 
         scoreField, 
-        foodScoreField, 
+        foodScoreField,
+        gameOverReason,
         gameOverScoreField, 
         gameOverHighScoreField;
 
-    readonly string scoreText = "Score: ", highScoreText = "HighScore: ";
+    readonly string 
+        scoreText = "Score: ", 
+        highScoreText = "HighScore: ",
+        youWonText = "You escaped!",
+        youGotEatenText = "You got eaten!",
+        youStarvedText = "You starved!";
+
+    readonly Color
+        diedColor = Color.red,
+        wonColor = Color.green;
 
     // Start is called before the first frame update
     void Start()
@@ -88,5 +98,26 @@ public class UIManager : MonoBehaviour
         gameOverScoreField.text = scoreText + score.ToString();
         int highScore = PlayerPrefs.GetInt(PlayerPrefsKeys.highScore);
         gameOverHighScoreField.text = highScoreText + highScore.ToString();
+    }
+
+    public void DisplayWon()
+    {
+        DisplayReason(youWonText, Color.green);
+    }
+
+    public void DisplayStarved()
+    {
+        DisplayReason(youStarvedText, Color.red);
+    }
+
+    public void DisplayGotEaten()
+    {
+        DisplayReason(youGotEatenText, Color.red);
+    }
+
+    void DisplayReason(string reason, Color textColor)
+    {
+        gameOverReason.text = reason;
+        gameOverReason.color = textColor;
     }
 }
