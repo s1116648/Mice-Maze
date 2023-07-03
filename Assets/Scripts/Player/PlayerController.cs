@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed = 3f;
 
+    [SerializeField]
+    GameObject sightRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +42,17 @@ public class PlayerController : MonoBehaviour
     {
         float moveX = MoveValue(GetAxisNames.Horizontal);
         float moveZ = MoveValue(GetAxisNames.Vertical);
-        transform.Translate(moveX, 0, moveZ);
+        Vector3 direction = new Vector3(moveX, 0, moveZ);
+        transform.Translate(direction);
+        RotateEyes(direction);
+    }
+
+    void RotateEyes(Vector3 direction)
+    {
+        if (direction.x != 0 || direction.z != 0) // So if it stays still it doesn't reset rotation
+        {
+            sightRotation.GetComponent<SightRotationConroller>().UpdateRotation(direction);
+        }
     }
 
     float MoveValue(string axisName)
