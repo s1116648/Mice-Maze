@@ -1,4 +1,4 @@
-#	f	c	#	c	p	#	c	#	c	#
+#	f	c	#	c	#	#	c	#	c	#
 c	#	#	c	c	#	#	c	#	#	#
 c	#	#	#	#	c	c	#	#	#	c
 c	e	#	#	#	#	c	#	#	c	#
@@ -7,5 +7,5 @@ c	e	#	#	#	#	c	#	#	c	#
 c	#	#	#	#	#	#	#	#	#	#
 #	f	#	c	#	#	c	#	c	c	#
 #	c	#	c	c	c	#	#	c	#	#
-#	c	#	c	#	c	e	c	c	c	#
-#	#	c	c	#	#	c	#	c	#	#
+#	c	#	c	#	c	#	e	c	c	#
+#	#	c	c	#	p	c	#	c	#	#

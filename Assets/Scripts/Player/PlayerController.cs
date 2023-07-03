@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
         {
             FoodTouched(other.gameObject);
         }
+        else if (other.gameObject.tag == TagNames.PassageBottom)  
+        {
+            BottomPassage();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -36,6 +40,11 @@ public class PlayerController : MonoBehaviour
         {
             EnemyTouched();
         }
+    }
+
+    void BottomPassage()
+    {
+        LevelManager.instance.BottomPassage();
     }
 
     void Move()
@@ -68,5 +77,10 @@ public class PlayerController : MonoBehaviour
     void FoodTouched(GameObject food)
     {
         LevelManager.instance.FoodTouched(food);
+    }
+
+    public void SetPlayerPosition(Vector3 position)
+    {
+        transform.Translate(position);
     }
 }

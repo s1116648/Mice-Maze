@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
 {
-    public static LevelBuilder instance;
-
     [SerializeField]
     GameObject
         playerPrefab, enemyPrefab, cratePrefab, foodPrefab, keyPrefab,
         playersParent, enemiesParent, cratesParent, foodsParent;
 
-    readonly string
-        level1 = "Assets/LevelData/Level1.txt",
-        level2 = "Assets/LevelData/Level2.txt";
+    [SerializeField]
+    string
+        levelPath = "Assets/LevelData/Level1.txt";
 
     Pointer pointer;
 
@@ -27,8 +25,9 @@ public class LevelBuilder : MonoBehaviour
             y = 0.5f,
             startXModifier = -5,
             startZModifier = 5;
-        float 
-            x, z,
+        float
+            x, z;
+        public float
             startX, startZ;
 
         public Pointer(float middleX, float middleZ)
@@ -65,10 +64,6 @@ public class LevelBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
         enemies = new List<GameObject>();
     }
 
@@ -80,14 +75,32 @@ public class LevelBuilder : MonoBehaviour
 
     public GameObject BuildLevel()
     {
-        pointer = new Pointer(0, 0); // Later middle of the level.
-        string levelData = GetLevelData(level1);
+        return BuildLevel(0, 0);
+    }
+
+    public void BuildLevel(GameObject player)
+    {
+        this.player = player;
+        BuildLevel();
+    }
+
+    public GameObject BuildLevel(float centerX, float centerZ)
+    {
+        pointer = new Pointer(centerX, centerZ);
+        Debug.Log("centerX: " + centerX + "\ncenterZ: " + centerZ);
+        string levelData = GetLevelData(levelPath);
         while (levelData.Length > 0)
         {
             levelData = SpawnNextThing(levelData);
         }
         EnemiesTargetPlayer();
         return player;
+    }
+
+    public void BuildLevel(GameObject player, float centerX, float centerZ)
+    {
+        this.player = player;
+        BuildLevel(centerX, centerZ);
     }
 
     string SpawnNextThing(string levelData)
