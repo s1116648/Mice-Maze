@@ -9,11 +9,12 @@ public class LevelBuilder : MonoBehaviour
 
     [SerializeField]
     GameObject
-        playerPrefab, enemyPrefab, cratePrefab, foodPrefab,
+        playerPrefab, enemyPrefab, cratePrefab, foodPrefab, keyPrefab,
         playersParent, enemiesParent, cratesParent, foodsParent;
 
     readonly string
-        level1 = "Assets/LevelData/Level1.txt";
+        level1 = "Assets/LevelData/Level1.txt",
+        level2 = "Assets/LevelData/Level2.txt";
 
     Pointer pointer;
 
@@ -80,7 +81,7 @@ public class LevelBuilder : MonoBehaviour
     public GameObject BuildLevel()
     {
         pointer = new Pointer(0, 0); // Later middle of the level.
-        string levelData = GetLevelData(level1);
+        string levelData = GetLevelData(level2);
         while (levelData.Length > 0)
         {
             levelData = SpawnNextThing(levelData);
@@ -107,6 +108,9 @@ public class LevelBuilder : MonoBehaviour
                 break;
             case 'f':
                 SpawnFood(pointer.Position());
+                break;
+            case 'k':
+                SpawnKey(pointer.Position());
                 break;
             default:
                 return levelData.Substring(1);
@@ -138,6 +142,11 @@ public class LevelBuilder : MonoBehaviour
     void SpawnFood(Vector3 position)
     {
         Instantiate(foodPrefab, position, Quaternion.identity, foodsParent.transform);
+    }
+
+    void SpawnKey(Vector3 position)
+    {
+        Instantiate(keyPrefab, position, Quaternion.identity);
     }
 
     void EnemiesTargetPlayer()
