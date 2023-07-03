@@ -81,7 +81,7 @@ public class LevelBuilder : MonoBehaviour
     public GameObject BuildLevel()
     {
         pointer = new Pointer(0, 0); // Later middle of the level.
-        string levelData = GetLevelData(level2);
+        string levelData = GetLevelData(level1);
         while (levelData.Length > 0)
         {
             levelData = SpawnNextThing(levelData);
